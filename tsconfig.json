@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        "skipLibCheck": true,
+        "allowJs": true,
+        "sourceMap": true,
+        "noImplicitAny": false,
+        "experimentalDecorators": true,
+        "strict": true,
+        "esModuleInterop": false,
+        "module": "commonjs",
+        "target": "es5",
+        "jsx": "react",
+        "baseUrl": "app",
+        "lib": [
+            "es2015.promise",
+            "dom",
+            "es2017"
+        ],
+        "outDir": "/tmp/phantom",
+        "paths": {
+            "*": [
+                "./typings/*",
+                "./*"
+            ]
+        },
+        "allowSyntheticDefaultImports": true
+    },
+    "include": [
+        "app/**/*"
+    ]
+}
