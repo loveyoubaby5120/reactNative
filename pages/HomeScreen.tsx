@@ -8,6 +8,7 @@ const db: any = openDatabase({ name: 'UserDatabase.db', location: 'default' });
 export class HomeScreen extends React.Component<any, any> {
     constructor(props) {
         super(props);
+
         db.transaction((txn) => {
             txn.executeSql(
                 "SELECT name FROM sqlite_master WHERE type='table' AND name='table_user'",
