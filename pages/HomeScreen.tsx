@@ -1,9 +1,11 @@
 import * as React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { Mybutton } from './components/Mybutton';
 import { Mytext } from './components/Mytext';
 import { openDatabase, SQLiteDatabase } from 'react-native-sqlite-storage';
 const db: any = openDatabase({ name: 'UserDatabase.db', location: 'default' });
+import RNFS from 'react-native-fs';
+
 
 export class HomeScreen extends React.Component<any, any> {
     constructor(props) {
@@ -27,6 +29,23 @@ export class HomeScreen extends React.Component<any, any> {
         });
     }
 
+    readFile() {
+        const path = RNFS.MainBundlePath + '/test.txt';
+
+        return RNFS.readFile(path)
+            .then((result) => {
+                console.log(result);
+
+                this.setState({
+                    readTxtResult: result,
+                })
+            })
+            .catch((err) => {
+                console.log(err.message);
+
+            });
+    }
+
     render() {
         return (
             <View
@@ -35,6 +54,7 @@ export class HomeScreen extends React.Component<any, any> {
                     backgroundColor: 'white',
                     flexDirection: 'column',
                 }}>
+                <Text>{this.state.readTxtResult}</Text>
                 <Mytext text="SQLite Example" />
                 <Mybutton
                     title="Register"
