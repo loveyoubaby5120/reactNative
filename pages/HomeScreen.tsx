@@ -1,15 +1,19 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Mybutton } from './components/Mybutton';
 import { Mytext } from './components/Mytext';
 import { openDatabase, SQLiteDatabase } from 'react-native-sqlite-storage';
 const db: any = openDatabase({ name: 'UserDatabase.db', location: 'default' });
-import RNFS from 'react-native-fs';
+import * as RNFS from 'react-native-fs';
 
-
-export class HomeScreen extends React.Component<any, any> {
+export class HomeScreen extends React.Component<any, { readTxtResult: string }> {
     constructor(props) {
         super(props);
+        super(props);
+
+        this.state = {
+            readTxtResult: '',
+        };
 
         db.transaction((txn) => {
             txn.executeSql(
@@ -30,7 +34,7 @@ export class HomeScreen extends React.Component<any, any> {
     }
 
     readFile() {
-        const path = RNFS.MainBundlePath + '/test.txt';
+        const path = RNFS.DocumentDirectoryPath + '/test.txt';
 
         return RNFS.readFile(path)
             .then((result) => {
@@ -54,7 +58,13 @@ export class HomeScreen extends React.Component<any, any> {
                     backgroundColor: 'white',
                     flexDirection: 'column',
                 }}>
-                <Text>{this.state.readTxtResult}</Text>
+                <View style={{ marginTop: 30 }}>
+                    <TouchableOpacity onPress={() => {
+                        this.readFile()
+                    }}>
+                        <Text> 读取本地txt文件 result=({this.state.readTxtResult})</Text>
+                    </TouchableOpacity>
+                </View>
                 <Mytext text="SQLite Example" />
                 <Mybutton
                     title="Register"
